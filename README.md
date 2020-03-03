@@ -40,7 +40,7 @@ cd src/cnn1d/baseline
 # run module (example: mnist as your main contribution)   
 python trainer.py    
 ```
-With the proposed setting, after 10 epochs we obtain the following confusion matrix and an accuray of 90.7%:
+With the proposed setting, after 10 epochs we obtain the following confusion matrix and a validation accuray of 90.7%:
 ```
 [[462  16  18   0   0   0]
  [  6 439  26   0   0   0]
@@ -49,3 +49,14 @@ With the proposed setting, after 10 epochs we obtain the following confusion mat
  [  1   2   0  70 459   0]
  [  0  14   0   0   0 523]]
  ```
+
+## Exploration
+We have tried to replace the CNN with an RNN which should be more adapted to temporal data. the files can be found in `src/rnn`:
+ ```bash
+# module folder
+cd src/rnn/baseline
+
+# run module (example: mnist as your main contribution)   
+python trainer.py    
+```
+The results are not as good as the baseline CNN, we achieve a validation accuracy of 80%.

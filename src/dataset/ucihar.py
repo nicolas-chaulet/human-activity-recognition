@@ -11,7 +11,7 @@ class UCIHAR(torch.utils.data.Dataset):
         raw_dir: directory where the data leaves
         split: train or test
     """
-    def __init__(self,raw_dir, split='train'):
+    def __init__(self,raw_dir, split='train', channel_first=True):
         self._raw_dir = raw_dir
         self._split = split
         self._record_folder = os.path.join(self._raw_dir,split)
@@ -19,7 +19,13 @@ class UCIHAR(torch.utils.data.Dataset):
         assert os.path.exists(self._record_folder)
         
         self.X, self.y = self.load_dataset_group()
-        self.X = self.X.transpose(2,1) #[B, C, T] time is the last dimension in pytorch
+        if channel_first:
+            self.X = self.X.transpose(2,1) #[B, C, T] time is the last dimension in pytorch
+            self._n_timesteps = self.X.shape[-1]
+            self._n_features = self.X.shape[1]
+        else:
+            self._n_timesteps = self.X.shape[1]
+            self._n_features = self.X.shape[-1]
         self.y -= 1 # Labels start at 0
         self.y = self.y.squeeze(-1)
         print(self.y.shape)
@@ -33,11 +39,11 @@ class UCIHAR(torch.utils.data.Dataset):
 
     @property
     def n_timesteps(self):
-        return self.X.shape[-1]
+       return self._n_timesteps
 
     @property
     def n_features(self):
-        return self.X.shape[1]
+        return self._n_features
 
     @property
     def n_labels(self):

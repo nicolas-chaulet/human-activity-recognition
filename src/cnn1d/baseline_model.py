@@ -13,7 +13,7 @@ from sklearn.metrics import confusion_matrix
 import numpy as np
 
 DIR = os.path.dirname(os.path.realpath(__file__))
-ROOT = os.path.join(DIR, "../../..")
+ROOT = os.path.join(DIR, "../..")
 UCI_DATA_PATH = os.path.join(ROOT,'data/UCI HAR Dataset')
 
 from src.dataset.ucihar import UCIHAR
@@ -96,11 +96,11 @@ class HARCNN(pl.LightningModule):
 
     @pl.data_loader
     def train_dataloader(self):
-        return DataLoader(UCIHAR(UCI_DATA_PATH,split='train'), batch_size=self.hparams.batch_size)
+        return DataLoader(self.train_dataset, batch_size=self.hparams.batch_size)
 
     @pl.data_loader
     def val_dataloader(self):
-        return DataLoader(UCIHAR(UCI_DATA_PATH,split='test'), batch_size=self.hparams.batch_size)
+        return DataLoader(self.test_dataset, batch_size=self.hparams.batch_size)
 
     @staticmethod
     def add_model_specific_args(parent_parser):

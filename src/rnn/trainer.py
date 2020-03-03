@@ -7,15 +7,15 @@ from pytorch_lightning import Trainer
 from argparse import ArgumentParser
 
 DIR = os.path.dirname(os.path.realpath(__file__))
-ROOT = os.path.join(DIR, "../../..")
+ROOT = os.path.join(DIR, "../..")
 sys.path.append(ROOT)
 
-from src.cnn1d.baseline.baseline_model import HARCNN
+from src.rnn.baseline_model import HARRNN
 
 
 def main(hparams):
     # init module
-    model = HARCNN(hparams)
+    model = HARRNN(hparams)
 
     # most basic trainer, uses good defaults
     trainer = Trainer(
@@ -30,7 +30,7 @@ if __name__ == '__main__':
 
     # give the module a chance to add own params
     # good practice to define LightningModule speficic params in the module
-    parser = HARCNN.add_model_specific_args(parser)
+    parser = HARRNN.add_model_specific_args(parser)
 
     # parse params
     hparams = parser.parse_args()
