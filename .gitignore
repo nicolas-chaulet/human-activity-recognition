@@ -1,0 +1,6 @@
+/har/
+/data/
+*.pyc
+/.vscode
+lightning_logs
+.DS_Store
